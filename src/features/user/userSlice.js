@@ -105,5 +105,16 @@ export const userSlice = createSlice({
       state.isLoading = false;
       toast.error(action.payload);
     },
+    [forgotPassword.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [forgotPassword.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      toast.success(`Please check your email.`);
+    },
+    [forgotPassword.rejected]: (state, action) => {
+      state.isLoading = false;
+      toast.error(action.payload);
+    },
   },
 });
