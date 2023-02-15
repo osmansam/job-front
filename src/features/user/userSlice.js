@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import axios from "axios";
 import {
   registerUserThunk,
   loginUserThunk,
@@ -38,12 +39,19 @@ const forgotPassword = createAsyncThunk(
     return forgotPasswordThunk("auth/forgot-password", user, thunkAPI);
   }
 );
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
+    },
+    logoutUser: async (state) => {
+      state.user = null;
+      state.isSidebarOpen = false;
+      await axios.delete("/api/v1/auth/logout");
+      toast.success(`Logged out successfully.`);
     },
   },
   extraReducers: {
