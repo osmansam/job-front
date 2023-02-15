@@ -26,3 +26,19 @@ export const updateUserThunk = async (url, user, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const resetPasswordThunk = async (url, user, thunkAPI) => {
+  try {
+    const resp = await axios.post(`${baseURL}/${url}`, user);
+    return resp.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.msg);
+  }
+};
+export const forgotPasswordThunk = async (url, user, thunkAPI) => {
+  try {
+    const resp = await axios.post(`${baseURL}/${url}`, user);
+    return resp.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.msg);
+  }
+};
