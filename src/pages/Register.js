@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormRow from "../components/FormRow";
 import { registerUser, loginUser } from "../features/user/userSlice";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,14 @@ const Register = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    if (isMember) {
+      const { email, password } = values;
+      if (!email || !password) {
+        toast.error("Please fill out all fields");
+        return;
+      }
+      dispatch(loginUser({ email, password }));
+    }
   };
 
   return (
