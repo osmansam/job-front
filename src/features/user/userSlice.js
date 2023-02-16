@@ -46,7 +46,7 @@ export const forgotPassword = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -60,67 +60,70 @@ export const userSlice = createSlice({
       toast.success(`Logged out successfully.`);
     },
   },
-  extraReducers: {
-    [registerUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [registerUser.fulfilled]: (state, action) => {
-      const { user } = action.payload;
-      state.user = user;
-      state.isLoading = false;
-      toast.success(`Please verify your email address.`);
-    },
-    [registerUser.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    [loginUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [loginUser.fulfilled]: (state, action) => {
-      const { user } = action.payload;
-      state.user = user;
-      state.isLoading = false;
-      toast.success(`Welcome ${user.name}!`);
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    [updateUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [updateUser.fulfilled]: (state, action) => {
-      const { user } = action.payload;
-      state.user = user;
-      state.isLoading = false;
-      toast.success(`User updated successfully.`);
-    },
-    [updateUser.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    [resetPassword.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [resetPassword.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      toast.success(`Password reset successfully.`);
-    },
-    [resetPassword.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    [forgotPassword.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [forgotPassword.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      toast.success(`Please check your email.`);
-    },
-    [forgotPassword.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        const { user } = action.payload;
+        state.user = user;
+        state.isLoading = false;
+        toast.success(`Please verify your email address.`);
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        const { user } = action.payload;
+        state.user = user;
+        state.isLoading = false;
+        toast.success(`Welcome ${user.name}!`);
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const { user } = action.payload;
+        state.user = user;
+        state.isLoading = false;
+        toast.success(`Profile updated successfully.`);
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success(`Password reset successfully.`);
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success(`Password reset link sent to your email.`);
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      });
   },
 });
+export const { toggleSidebar, logoutUser } = userSlice.actions;
+export default userSlice.reducer;

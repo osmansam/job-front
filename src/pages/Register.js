@@ -30,13 +30,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-  if (!isLoading) {
-    return (
-      <div>
-        <h1>osman</h1>
-      </div>
-    );
-  }
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>

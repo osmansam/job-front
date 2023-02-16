@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import {
   createJobThunk,
   deleteJobThunk,
-  editJobThunk,
+  updateJobThunk,
   getAllJobsThunk,
 } from "./jobThunk";
 const initialState = {
@@ -20,11 +20,11 @@ const initialState = {
 
 const createJob = createAsyncThunk("job/create", createJobThunk);
 const deleteJob = createAsyncThunk("job/delete", deleteJobThunk);
-const editJob = createAsyncThunk("job/edit", editJobThunk);
+const updateJob = createAsyncThunk("job/update", updateJobThunk);
 //bu gecici olarak burada
 const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
 
-export const jobSlice = createSlice({
+const jobSlice = createSlice({
   name: "job",
   initialState,
   reducers: {
@@ -36,50 +36,53 @@ export const jobSlice = createSlice({
       return initialState;
     },
   },
-  extraReducers: {
-    [createJob.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [createJob.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      toast.success("Job created successfully.");
-    },
-    [createJob.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    [deleteJob.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [deleteJob.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      toast.success("Job deleted successfully.");
-    },
-    [deleteJob.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    [editJob.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [editJob.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      toast.success("Job updated successfully.");
-    },
-    [editJob.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
-    //bu gecici olarak burada
-    [getAllJobs.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getAllJobs.fulfilled]: (state, action) => {
-      state.isLoading = false;
-    },
-    [getAllJobs.rejected]: (state, action) => {
-      state.isLoading = false;
-      toast.error(action.payload);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Job created successfully.");
+      })
+      .addCase(createJob.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(deleteJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Job deleted successfully.");
+      })
+      .addCase(deleteJob.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(updateJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Job updated successfully.");
+      })
+      .addCase(updateJob.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(getAllJobs.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllJobs.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Jobs fetched successfully.");
+      })
+      .addCase(getAllJobs.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      });
   },
 });
+export const { handleChange, clearValues } = jobSlice.actions;
+export default jobSlice.reducer;
