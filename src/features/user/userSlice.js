@@ -67,7 +67,6 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         const { user } = action.payload;
-        state.user = user;
         state.isLoading = false;
         toast.success(`Please verify your email address.`);
       })
