@@ -2,11 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormRow from "../components/FormRow";
 import { registerUser, loginUser } from "../features/user/userSlice";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((state) => state.user);
-  const [isMember, setIsMember] = React.useState(true);
+  const [isMember, setIsMember] = React.useState(false);
 
   const initialState = {
     name: "",
@@ -29,13 +32,41 @@ const Register = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { email, password, name } = values;
+    if (isMember) {
+      if (!email || !password) {
+        toast.error("Please fill out all fields");
+        return;
+      }
+      dispatch(loginUser({ email, password }));
+      setValues(initialState);
+    }
+    if (!isMember) {
+      if (!name || !email || !password) {
+        toast.error("Please fill out all fields");
+        return;
+      }
+      dispatch(registerUser({ name, email, password }));
+      setValues(initialState);
+      setIsMember(true);
+    }
   };
+  React.useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        history.push("/dashboard");
+      }, 500);
+    }
+  }, [user]);
 
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h2>{isMember ? "Login" : "Register"}</h2>
-        {isMember && (
+        {!isMember && (
           <FormRow
             type="text"
             name="name"
