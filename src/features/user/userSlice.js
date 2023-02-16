@@ -7,7 +7,7 @@ import {
   updateUserThunk,
   resetPasswordThunk,
   forgotPasswordThunk,
-} from "../../api/userApi";
+} from "./userThunk";
 
 const initialState = {
   user: null,
