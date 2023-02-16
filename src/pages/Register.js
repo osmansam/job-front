@@ -6,7 +6,7 @@ import { registerUser, loginUser } from "../features/user/userSlice";
 const Register = () => {
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((state) => state.user);
-  const [isMember, setIsMember] = React.useState(true);
+  const [isMember, setIsMember] = React.useState(false);
 
   const initialState = {
     name: "",
@@ -29,13 +29,14 @@ const Register = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(values);
   };
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h2>{isMember ? "Login" : "Register"}</h2>
-        {isMember && (
+        {!isMember && (
           <FormRow
             type="text"
             name="name"
