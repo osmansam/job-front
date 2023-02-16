@@ -4,7 +4,7 @@ function App() {
   return;
   <Router>
     <Switch>
-      <Route path="/register">
+      <Route path="/">
         <Register />
       </Route>
     </Switch>

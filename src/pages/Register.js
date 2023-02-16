@@ -1,12 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormRow from "../components/FormRow";
-import { registerUser, loginUser } from "../features/user/UserSlice";
-import { useNavigate } from "react-router-dom";
+import { registerUser, loginUser } from "../features/user/userSlice";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { isLoading, user } = useSelector((state) => state.user);
   const [isMember, setIsMember] = React.useState(true);
 
@@ -32,7 +30,13 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
+  if (!isLoading) {
+    return (
+      <div>
+        <h1>osman</h1>
+      </div>
+    );
+  }
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>

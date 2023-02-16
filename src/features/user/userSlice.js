@@ -14,26 +14,32 @@ const initialState = {
   isSidebarOpen: false,
   isLoading: false,
 };
-const registerUser = createAsyncThunk(
+export const registerUser = createAsyncThunk(
   "user/register",
   async (user, thunkAPI) => {
     return registerUserThunk("auth/register", user, thunkAPI);
   }
 );
-const loginUser = createAsyncThunk("user/login", async (user, thunkAPI) => {
-  return loginUserThunk("auth/login", user, thunkAPI);
-});
+export const loginUser = createAsyncThunk(
+  "user/login",
+  async (user, thunkAPI) => {
+    return loginUserThunk("auth/login", user, thunkAPI);
+  }
+);
 
-const updateUser = createAsyncThunk("user/update", async (user, thunkAPI) => {
-  return updateUserThunk("auth/update", user, thunkAPI);
-});
-const resetPassword = createAsyncThunk(
+export const updateUser = createAsyncThunk(
+  "user/update",
+  async (user, thunkAPI) => {
+    return updateUserThunk("auth/update", user, thunkAPI);
+  }
+);
+export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async (user, thunkAPI) => {
     return resetPasswordThunk("auth/reset-password", user, thunkAPI);
   }
 );
-const forgotPassword = createAsyncThunk(
+export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
   async (user, thunkAPI) => {
     return forgotPasswordThunk("auth/forgot-password", user, thunkAPI);
