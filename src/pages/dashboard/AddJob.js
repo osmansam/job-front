@@ -10,7 +10,6 @@ import {
   updateJob,
   getAllJobs,
   deleteJob,
-  editJob,
 } from "../../features/job/jobSlice";
 const AddJob = () => {
   const history = useHistory();
@@ -115,6 +114,26 @@ const AddJob = () => {
               <h3>{job.jobLocation}</h3>
               <h4>{job.jobType}</h4>
               <h5>{job.status}</h5>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  dispatch(updateJob(job._id));
+                  dispatch(getAllJobs());
+                }}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  dispatch(deleteJob(job._id));
+                  dispatch(getAllJobs());
+                }}
+              >
+                Delete
+              </button>
             </div>
           );
         })}
