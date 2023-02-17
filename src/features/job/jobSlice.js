@@ -16,20 +16,20 @@ const initialState = {
   statusOptions: ["interview", "declined", "pending"],
   status: "pending",
   isEditing: false,
+  editId: null,
 };
 
-const createJob = createAsyncThunk("job/create", createJobThunk);
-const deleteJob = createAsyncThunk("job/delete", deleteJobThunk);
-const updateJob = createAsyncThunk("job/update", updateJobThunk);
+export const createJob = createAsyncThunk("job/create", createJobThunk);
+export const deleteJob = createAsyncThunk("job/delete", deleteJobThunk);
+export const updateJob = createAsyncThunk("job/update", updateJobThunk);
 //bu gecici olarak burada
-const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
+export const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
 
 const jobSlice = createSlice({
   name: "job",
   initialState,
   reducers: {
-    handleChange: (state, { payload }) => {
-      const { name, value } = payload;
+    handleChange: (state, { payload: { name, value } }) => {
       state[name] = value;
     },
     clearValues: () => {
