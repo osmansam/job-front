@@ -5,11 +5,18 @@ import FormRowSelect from "../../components/FormRowSelect";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { handleChange, clearValues } from "../../features/job/jobSlice";
-import { createJob, updateJob } from "../../features/job/jobSlice";
+import {
+  createJob,
+  updateJob,
+  getAllJobs,
+  deleteJob,
+  editJob,
+} from "../../features/job/jobSlice";
 const AddJob = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const {
+    jobs,
     isLoading,
     position,
     company,
@@ -85,25 +92,32 @@ const AddJob = () => {
           handleChange={handleJobChange}
           list={statusOptions}
         />
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleCancel}
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={(e) => {
-            e.preventDefault();
-            dispatch(clearValues());
-            history.push("/dashboard");
-          }}
-        >
+
+        <button type="submit" className="btn btn-primary">
           {isEditing ? "Edit Job" : "Add Job"}
         </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            dispatch(getAllJobs());
+          }}
+        >
+          Get All Jobs
+        </button>
       </form>
+      {jobs &&
+        jobs.map((job) => {
+          return (
+            <div key={job._id}>
+              <h1>{job.position}</h1>
+              <h2>{job.company}</h2>
+              <h3>{job.jobLocation}</h3>
+              <h4>{job.jobType}</h4>
+              <h5>{job.status}</h5>
+            </div>
+          );
+        })}
     </div>
   );
 };

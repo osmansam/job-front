@@ -7,6 +7,7 @@ import {
   getAllJobsThunk,
 } from "./jobThunk";
 const initialState = {
+  jobs: [],
   isLoading: false,
   position: "",
   company: "",
@@ -74,8 +75,9 @@ const jobSlice = createSlice({
       .addCase(getAllJobs.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllJobs.fulfilled, (state, action) => {
+      .addCase(getAllJobs.fulfilled, (state, { payload }) => {
         state.isLoading = false;
+        state.jobs = payload.jobs;
         toast.success("Jobs fetched successfully.");
       })
       .addCase(getAllJobs.rejected, (state, action) => {
