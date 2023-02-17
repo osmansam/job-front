@@ -5,8 +5,10 @@ import {
   deleteJobThunk,
   updateJobThunk,
   getAllJobsThunk,
+  getJobThunk,
 } from "./jobThunk";
 const initialState = {
+  job: [],
   jobs: [],
   isLoading: false,
   position: "",
@@ -25,6 +27,7 @@ export const deleteJob = createAsyncThunk("job/delete", deleteJobThunk);
 export const updateJob = createAsyncThunk("job/update", updateJobThunk);
 //bu gecici olarak burada
 export const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
+export const getJob = createAsyncThunk("job/get", getJobThunk);
 
 const jobSlice = createSlice({
   name: "job",
@@ -78,9 +81,19 @@ const jobSlice = createSlice({
       .addCase(getAllJobs.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.jobs = payload.jobs;
-        toast.success("Jobs fetched successfully.");
       })
       .addCase(getAllJobs.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(getJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getJob.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.job = payload.job;
+      })
+      .addCase(getJob.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });

@@ -30,7 +30,15 @@ export const updateJobThunk = async (id, job, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
-
+export const getJobThunk = async (id, thunkAPI) => {
+  try {
+    const resp = await axios.get(`${baseURL}/job/${id}`);
+    thunkAPI.dispatch(clearValues());
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
 //bu gecici olarak burada
 export const getAllJobsThunk = async (thunkAPI) => {
   try {
