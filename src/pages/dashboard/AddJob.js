@@ -35,8 +35,12 @@ const AddJob = () => {
       );
     } else {
       dispatch(createJob({ position, company, jobLocation, jobType, status }));
+      dispatch(getAllJobs());
     }
   };
+  React.useEffect(() => {
+    dispatch(getAllJobs());
+  }, []);
   const handleCancel = () => {
     dispatch(clearValues());
     history.push("/dashboard");
@@ -108,7 +112,12 @@ const AddJob = () => {
       {jobs &&
         jobs.map((job) => {
           return (
-            <div key={job._id}>
+            <div
+              key={job._id}
+              onClick={() => {
+                history.push(`/singleJob/${job._id}`);
+              }}
+            >
               <h1>{job.position}</h1>
               <h2>{job.company}</h2>
               <h3>{job.jobLocation}</h3>
