@@ -96,42 +96,6 @@ const AddJob = () => {
             {isEditing ? "Edit Job" : "Add Job"}
           </button>
         </form>
-        {jobs &&
-          jobs.map((job) => {
-            return (
-              <div key={job._id}>
-                <div
-                  onClick={() => {
-                    history.push(`/singleJob/${job._id}`);
-                  }}
-                >
-                  <h1>{job.position}</h1>
-                  <h2>{job.company}</h2>
-                  <h3>{job.jobLocation}</h3>
-                  <h4>{job.jobType}</h4>
-                  <h5>{job.status}</h5>
-                </div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => {
-                    dispatch(updateJob(job._id));
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => {
-                    dispatch(deleteJob(job._id));
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            );
-          })}
       </div>
     </Wrapper>
   );

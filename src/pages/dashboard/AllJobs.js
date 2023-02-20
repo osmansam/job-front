@@ -36,7 +36,7 @@ const Wrapper = styled.div`
     font-weight: 700;
     text-transform: capitalize;
     margin: 3rem auto;
-    padding-left: 5rem;
+    padding-left: 3rem;
     border-bottom: 1px solid #ccc;
   }
   .jobs-container {
