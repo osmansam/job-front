@@ -78,6 +78,7 @@ const AddJob = () => {
             value={company}
             handleChange={handleJobChange}
           />
+
           <FormRow
             type="text"
             name="jobLocation"
