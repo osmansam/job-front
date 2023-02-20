@@ -2,14 +2,14 @@ import { React, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
-import { getAllJobs } from "../../features/job/jobSlice";
+import { getAllJobs } from "../../features/search/searchSlice";
 import styled from "styled-components";
 import JobContainer from "../../components/JobContainer";
 
 const AllJobs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoading, jobs } = useSelector((state) => state.job);
+  const { isLoading, jobs } = useSelector((state) => state.search);
   useEffect(() => {
     dispatch(getAllJobs());
   }, []);

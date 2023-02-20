@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 const Job = ({ job }) => {
   const history = useHistory();
   const { _id, position, company, jobLocation, jobType, status } = job;
-  console.log(_id);
+
   const handleClick = () => {
     history.push(`/singleJob/${_id}`);
   };
