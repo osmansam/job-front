@@ -16,11 +16,11 @@ const AllJobs = () => {
 
   return (
     <Wrapper>
-      <h1>All Jobs</h1>
+      <h1 className="title">All Jobs</h1>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <div>
+        <div className="jobs-container">
           <JobContainer jobs={jobs} />
         </div>
       )}
@@ -28,14 +28,23 @@ const AllJobs = () => {
   );
 };
 const Wrapper = styled.div`
-  display: block;
-  h1 {
+  width: 100%;
+  display: inline-block;
+  .title {
+    width: 100%;
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
     text-transform: capitalize;
     margin: 3rem auto;
+    padding-left: 5rem;
+    border-bottom: 1px solid #ccc;
+  }
+  .jobs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
+    margin: 1.5rem;
   }
 `;
 

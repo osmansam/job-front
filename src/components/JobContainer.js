@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 1rem;
+  margin: 1.5rem;
 `;
 
 export default JobContainer;
