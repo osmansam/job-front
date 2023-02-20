@@ -1,12 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const Job = ({ job }) => {
-  const { id, position, company, jobLocation, jobType, status } = job;
-
+  const history = useHistory();
+  const { _id, position, company, jobLocation, jobType, status } = job;
+  console.log(_id);
+  const handleClick = () => {
+    history.push(`/singleJob/${_id}`);
+  };
   return (
     <Wrapper>
-      <div className="job-container">
+      <div className="job-container" onClick={handleClick}>
         <h1>{position}</h1>
         <h2>
           <span>Company:</span>
