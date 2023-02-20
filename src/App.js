@@ -6,9 +6,11 @@ import SingleJob from "./pages/dashboard/SingleJob";
 import AllJobs from "./pages/dashboard/AllJobs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "./components/Navbar";
 function App() {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route path="/register" exact>
           <Register />

@@ -45,6 +45,8 @@ const Wrapper = styled.div`
     margin: 1rem;
     width: 100%;
     max-width: 200px;
+    height: 300px;
+    cursor: pointer;
   }
   h1 {
     font-size: 1.5rem;
