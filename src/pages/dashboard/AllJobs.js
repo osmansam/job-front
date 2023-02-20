@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
 import { getAllJobs } from "../../features/job/jobSlice";
 import styled from "styled-components";
-import Job from "../../components/Job";
+import JobContainer from "../../components/JobContainer";
 
 const AllJobs = () => {
   const history = useHistory();
@@ -21,29 +21,21 @@ const AllJobs = () => {
         <h1>Loading...</h1>
       ) : (
         <div>
-          {jobs.map((job) => {
-            return <Job key={job.id} job={job} />;
-          })}
+          <JobContainer jobs={jobs} />
         </div>
       )}
     </Wrapper>
   );
 };
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: center;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 1rem;
+  display: block;
   h1 {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1rem;
     text-transform: capitalize;
     margin: 3rem auto;
+    align-items: center;
   }
 `;
 
