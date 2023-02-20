@@ -54,7 +54,7 @@ const Register = () => {
   React.useEffect(() => {
     if (user) {
       setTimeout(() => {
-        history.push("/addjob");
+        history.push("/allJobs");
       }, 500);
     }
   }, [user]);

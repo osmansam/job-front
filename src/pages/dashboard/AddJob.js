@@ -7,12 +7,7 @@ import { useHistory } from "react-router-dom";
 import { handleChange, clearValues } from "../../features/job/jobSlice";
 import styled from "styled-components";
 
-import {
-  createJob,
-  updateJob,
-  getAllJobs,
-  deleteJob,
-} from "../../features/job/jobSlice";
+import { createJob, updateJob, deleteJob } from "../../features/job/jobSlice";
 const AddJob = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -39,12 +34,9 @@ const AddJob = () => {
       await dispatch(
         createJob({ position, company, jobLocation, jobType, status })
       );
-      dispatch(getAllJobs());
     }
   };
-  React.useEffect(() => {
-    dispatch(getAllJobs());
-  }, []);
+  React.useEffect(() => {}, []);
   const handleCancel = () => {
     dispatch(clearValues());
     history.push("/dashboard");
@@ -78,6 +70,7 @@ const AddJob = () => {
             value={company}
             handleChange={handleJobChange}
           />
+
           <FormRow
             type="text"
             name="jobLocation"
@@ -102,15 +95,6 @@ const AddJob = () => {
           <button type="submit" className="btn btn-primary">
             {isEditing ? "Edit Job" : "Add Job"}
           </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              dispatch(getAllJobs());
-            }}
-          >
-            Get All Jobs
-          </button>
         </form>
         {jobs &&
           jobs.map((job) => {
@@ -132,7 +116,6 @@ const AddJob = () => {
                   className="btn btn-primary"
                   onClick={() => {
                     dispatch(updateJob(job._id));
-                    dispatch(getAllJobs());
                   }}
                 >
                   Edit
@@ -140,9 +123,8 @@ const AddJob = () => {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={async () => {
-                    await dispatch(deleteJob(job._id));
-                    dispatch(getAllJobs());
+                  onClick={() => {
+                    dispatch(deleteJob(job._id));
                   }}
                 >
                   Delete
