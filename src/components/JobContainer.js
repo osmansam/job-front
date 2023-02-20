@@ -14,9 +14,8 @@ const JobContainer = ({ jobs }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin: 1.5rem;
+  justify-content: left;
+  margin: 2rem;
 `;
 
 export default JobContainer;

@@ -5,6 +5,7 @@ import { useHistory, Link } from "react-router-dom";
 import { getAllJobs } from "../../features/search/searchSlice";
 import styled from "styled-components";
 import JobContainer from "../../components/JobContainer";
+import SearchContainer from "../../components/SearchContainer";
 
 const AllJobs = () => {
   const history = useHistory();
@@ -20,8 +21,13 @@ const AllJobs = () => {
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <div className="jobs-container">
-          <JobContainer jobs={jobs} />
+        <div>
+          <div className="search-container">
+            <SearchContainer />
+          </div>
+          <div className="jobs-container">
+            <JobContainer jobs={jobs} />
+          </div>
         </div>
       )}
     </Wrapper>
@@ -43,6 +49,13 @@ const Wrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem;
+  }
+  .search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
     margin: 1.5rem;
   }

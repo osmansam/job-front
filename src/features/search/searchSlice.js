@@ -9,6 +9,7 @@ const initialState = {
   page: 1,
   numberOfPages: 1,
   isLoading: true,
+  sortOptions: ["latest", "oldest", "a-z", "z-a"],
   jobs: [],
 };
 export const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
