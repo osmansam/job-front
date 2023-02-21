@@ -70,7 +70,14 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             list={sortOptions}
           />
-          <button type="submit">filter</button>
+          <button
+            type="submit"
+            onClick={() => {
+              dispatch(getAllJobs());
+            }}
+          >
+            filter
+          </button>
           <button
             type="button "
             disabled={isLoading}

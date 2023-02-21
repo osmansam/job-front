@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 2rem;
-  border: 1px solid black;
   width: ${(props) => props.jobsLength * 300}px;
   max-width: 100%;
 `;
