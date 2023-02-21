@@ -26,10 +26,8 @@ const searchSlice = createSlice({
     },
     handleFilters: (state, { payload: { name, value } }) => {
       state[name] = value;
-      console.log(state.searchStatus);
     },
     changePage: (state, { payload }) => {
-      console.log(payload);
       state.page = payload;
     },
   },
@@ -43,7 +41,6 @@ const searchSlice = createSlice({
         state.jobs = payload.jobs;
         state.totalJobs = payload.totalJobs;
         state.numberOfPages = payload.numOfPages;
-        console.log(state.numberOfPages);
       })
       .addCase(getAllJobs.rejected, (state, action) => {
         state.isLoading = false;
