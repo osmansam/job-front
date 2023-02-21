@@ -16,7 +16,7 @@ const JobContainer = ({ jobs }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   margin: 2rem;
   width: ${(props) => props.jobsLength * 300}px;
