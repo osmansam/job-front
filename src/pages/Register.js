@@ -97,7 +97,6 @@ const Register = () => {
             name="role"
             value={values.role}
             handleChange={handleChange}
-            labelText="Role"
             list={["employee", "employer"]}
           />
         )}

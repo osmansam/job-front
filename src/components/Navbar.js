@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../features/user/userSlice";
 const Navbar = () => {
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   return (
     <Wrapper>
@@ -29,7 +31,7 @@ const Navbar = () => {
                 <Link to="/addjob">Add Job</Link>
               </li>
             )}
-            <li>
+            <li onClick={() => dispatch(logoutUser())}>
               <Link to="/register">Logout</Link>
             </li>
           </ul>

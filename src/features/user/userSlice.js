@@ -55,7 +55,6 @@ const userSlice = createSlice({
     },
     logoutUser: async (state) => {
       state.user = null;
-      state.isSidebarOpen = false;
       await axios.delete("/api/v1/auth/logout");
       toast.success(`Logged out successfully.`);
     },
