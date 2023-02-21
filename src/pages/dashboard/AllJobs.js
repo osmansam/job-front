@@ -6,14 +6,25 @@ import { getAllJobs } from "../../features/search/searchSlice";
 import styled from "styled-components";
 import JobContainer from "../../components/JobContainer";
 import SearchContainer from "../../components/SearchContainer";
-
+import { changePage } from "../../features/search/searchSlice";
 const AllJobs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoading, jobs } = useSelector((state) => state.search);
+  const { isLoading, jobs, numberOfPages } = useSelector(
+    (state) => state.search
+  );
+  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(getAllJobs());
   }, []);
+  const handlePageChange = (page) => {
+    dispatch(changePage(page));
+    dispatch(getAllJobs());
+  };
+
+  if (!user) {
+    return history.push("/register");
+  }
 
   return (
     <Wrapper>
@@ -27,6 +38,22 @@ const AllJobs = () => {
           </div>
           <div className="jobs-container">
             <JobContainer jobs={jobs} />
+          </div>
+          <div className="page-container">
+            {numberOfPages > 1 &&
+              Array.from({ length: numberOfPages }, (_, i) => {
+                const page = i + 1;
+                return (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      handlePageChange(page);
+                    }}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
           </div>
         </div>
       )}
@@ -53,6 +80,13 @@ const Wrapper = styled.div`
     margin: 1.5rem;
   }
   .search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem;
+  }
+  .page-container {
     width: 100%;
     display: flex;
     justify-content: center;

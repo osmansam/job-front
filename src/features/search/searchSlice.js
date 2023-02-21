@@ -12,6 +12,8 @@ const initialState = {
   isLoading: true,
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
   jobs: [],
+  totalJobs: 0,
+  numberOfPages: 0,
 };
 export const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
 
@@ -27,6 +29,7 @@ const searchSlice = createSlice({
       console.log(state.searchStatus);
     },
     changePage: (state, { payload }) => {
+      console.log(payload);
       state.page = payload;
     },
   },
@@ -38,7 +41,9 @@ const searchSlice = createSlice({
       .addCase(getAllJobs.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.jobs = payload.jobs;
-        state.numberOfPages = payload.numberOfPages;
+        state.totalJobs = payload.totalJobs;
+        state.numberOfPages = payload.numOfPages;
+        console.log(state.numberOfPages);
       })
       .addCase(getAllJobs.rejected, (state, action) => {
         state.isLoading = false;

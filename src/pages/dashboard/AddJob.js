@@ -24,6 +24,7 @@ const AddJob = () => {
     isEditing,
     editId,
   } = useSelector((state) => state.job);
+  const { user } = useSelector((state) => state.user);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEditing) {
@@ -52,6 +53,9 @@ const AddJob = () => {
         <h1>Loading...</h1>
       </div>
     );
+  }
+  if (!user) {
+    return history.push("/register");
   }
   return (
     <Wrapper>

@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormRow from "../components/FormRow";
+import FormRowSelect from "../components/FormRowSelect";
 import { registerUser, loginUser } from "../features/user/userSlice";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 const Register = () => {
   const history = useHistory();
@@ -15,6 +17,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    role: "employee",
     isMember, // true = login, false = register
   };
   const [values, setValues] = React.useState(initialState);
@@ -32,7 +35,7 @@ const Register = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password, name } = values;
+    const { email, password, name, role } = values;
     if (isMember) {
       if (!email || !password) {
         toast.error("Please fill out all fields");
@@ -46,7 +49,7 @@ const Register = () => {
         toast.error("Please fill out all fields");
         return;
       }
-      dispatch(registerUser({ name, email, password }));
+      dispatch(registerUser({ name, email, password, role }));
       setValues(initialState);
       setIsMember(true);
     }
@@ -55,7 +58,7 @@ const Register = () => {
     if (user) {
       setTimeout(() => {
         history.push("/allJobs");
-      }, 500);
+      }, 100);
     }
   }, [user]);
 
@@ -63,7 +66,7 @@ const Register = () => {
     return <h1>Loading...</h1>;
   }
   return (
-    <div className="form-container">
+    <Wrapper>
       <form onSubmit={handleSubmit}>
         <h2>{isMember ? "Login" : "Register"}</h2>
         {!isMember && (
@@ -89,6 +92,16 @@ const Register = () => {
           handleChange={handleChange}
           labelText="Password"
         />
+        {!isMember && (
+          <FormRowSelect
+            name="role"
+            value={values.role}
+            handleChange={handleChange}
+            labelText="Role"
+            list={["employee", "employer"]}
+          />
+        )}
+
         <button type="submit" className="btn btn-primary">
           {isMember ? "Login" : "Register"}
         </button>
@@ -99,8 +112,22 @@ const Register = () => {
           </button>
         </p>
       </form>
-    </div>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vh;
+    height: 100%;
+    margin-top: 5rem;
+  }
+`;
 
 export default Register;

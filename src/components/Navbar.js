@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const Navbar = () => {
+  const { user } = useSelector((state) => state.user);
+
   return (
     <Wrapper>
       <nav>
@@ -11,20 +13,27 @@ const Navbar = () => {
           alt="logo"
           className="logo"
         />
-        <ul>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/allJobs">Find Job</Link>
-          </li>
-          <li>
-            <Link to="/yourJobs">Your Jobs</Link>
-          </li>
-          <li>
-            <Link to="/addjob">Add Job</Link>
-          </li>
-        </ul>
+        {user && (
+          <ul>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+
+            <li>
+              <Link to="/allJobs">
+                {user.role === "employer" ? "Your Jobs" : "Find Job"}
+              </Link>
+            </li>
+            {user.role === "employer" && (
+              <li>
+                <Link to="/addjob">Add Job</Link>
+              </li>
+            )}
+            <li>
+              <Link to="/register">Logout</Link>
+            </li>
+          </ul>
+        )}
       </nav>
     </Wrapper>
   );
