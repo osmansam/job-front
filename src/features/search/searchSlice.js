@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { getAllJobsThunk } from "./searchThunk";
+import { useDispatch } from "react-redux";
 const initialState = {
   search: "",
   searchStatus: "all",
@@ -21,15 +22,9 @@ const searchSlice = createSlice({
     clearFilters: (state) => {
       return initialState;
     },
-    handleFilters: (
-      state,
-      { payload: { search, searchStatus, searchType, sort, page } }
-    ) => {
-      state.search = search;
-      state.searchStatus = searchStatus;
-      state.searchType = searchType;
-      state.sort = sort;
-      state.page = page;
+    handleFilters: (state, { payload: { name, value } }) => {
+      state[name] = value;
+      console.log(state.searchStatus);
     },
     changePage: (state, { payload }) => {
       state.page = payload;

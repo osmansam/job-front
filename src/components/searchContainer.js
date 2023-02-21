@@ -24,15 +24,14 @@ const SearchContainer = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(clearFilters());
     dispatch(getAllJobs());
   };
-  const handleChange = (e) => {
+  const handleSearch = (e) => {
     const { name, value } = e.target;
-    dispatch(handleFilters({ [name]: value }));
+    dispatch(handleFilters({ name, value }));
   };
   const handlePageChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     dispatch(changePage(value));
   };
 
@@ -40,19 +39,19 @@ const SearchContainer = () => {
     <Wrapper>
       <form className="form">
         <div className="form-center">
-          {/* search position */}
+          {/* search  */}
           <FormRow
             type="text"
             name="search"
             value={search}
-            handleChange={handleChange}
+            handleChange={handleSearch}
           />
           {/* search by status */}
           <FormRowSelect
             labelText="status"
             name="searchStatus"
             value={searchStatus}
-            handleChange={handleChange}
+            handleChange={handleSearch}
             list={["all", ...statusOptions]}
           />
 
@@ -61,17 +60,25 @@ const SearchContainer = () => {
             labelText="type"
             name="searchType"
             value={searchType}
-            handleChange={handleChange}
+            handleChange={handleSearch}
             list={["all", ...jobTypeOptions]}
           />
           {/* sort */}
           <FormRowSelect
             name="sort"
             value={sort}
-            handleChange={handleChange}
+            handleChange={handleSearch}
             list={sortOptions}
           />
-          <button disabled={isLoading} onClick={handleSubmit}>
+          <button type="submit">filter</button>
+          <button
+            type="button "
+            disabled={isLoading}
+            onClick={() => {
+              dispatch(clearFilters());
+              dispatch(getAllJobs());
+            }}
+          >
             clear filters
           </button>
         </div>
