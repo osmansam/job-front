@@ -32,6 +32,11 @@ const Navbar = () => {
                 <Link to="/addjob">Add Job</Link>
               </li>
             )}
+            {user.role !== "employer" && (
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+            )}
             <li
               onClick={() => {
                 dispatch(logoutUser());

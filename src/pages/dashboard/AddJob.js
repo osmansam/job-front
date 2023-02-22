@@ -37,7 +37,6 @@ const AddJob = () => {
       );
     }
   };
-  React.useEffect(() => {}, []);
   const handleCancel = () => {
     dispatch(clearValues());
     history.push("/dashboard");
