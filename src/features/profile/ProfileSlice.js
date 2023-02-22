@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { createProfileThunk, getProfileThunk } from "./ProfileThunk";
 
 const initialState = {
-  profile: {},
+  profile: null,
   name: "",
   lastName: "",
   email: "",
@@ -54,9 +54,6 @@ const profileSlice = createSlice({
     clearProfile: () => {
       return initialState;
     },
-    setProfile: (state) => {
-      getProfile();
-    },
     setIsEditing: (state, { payload }) => {
       state.isEditing = payload;
     },
@@ -80,19 +77,24 @@ const profileSlice = createSlice({
       .addCase(getProfile.fulfilled, (state, action) => {
         state.isLoading = false;
         state.profile = action.payload;
-        state.name = action.payload.name;
-        state.lastName = action.payload.lastName;
-        state.email = action.payload.email;
-        state.phone = action.payload.phone;
-        state.address = action.payload.address;
-        state.city = action.payload.city;
-        state.country = action.payload.country;
-        state.zipCode = action.payload.zipCode;
-        state.degree = action.payload.degree;
-        state.field = action.payload.field;
-        state.university = action.payload.university;
-        state.graduationYear = action.payload.graduationYear;
-        state.skills = action.payload.skills;
+        if (state.profile) {
+          state.name = state.profile.profile.name;
+          state.lastName = state.profile.profile.lastName;
+          state.email = state.profile.profile.email;
+          state.phone = state.profile.profile.phone;
+          state.address = state.profile.profile.address;
+          state.city = state.profile.profile.city;
+          state.country = state.profile.profile.country;
+          state.zipCode = state.profile.profile.zipCode;
+          state.degree = state.profile.profile.degree;
+          state.field = state.profile.profile.field;
+          state.university = state.profile.profile.university;
+          state.graduationYear = state.profile.profile.graduationYear;
+          state.skills = state.profile.profile.skills;
+          state.isEditing = state.profile.profile.isEditing;
+        } else {
+          return initialState;
+        }
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.isLoading = false;
@@ -101,6 +103,6 @@ const profileSlice = createSlice({
   },
 });
 
-export const { handleChange, setProfile, clearProfile, setIsEditing } =
+export const { handleChange, clearProfile, setIsEditing } =
   profileSlice.actions;
 export default profileSlice.reducer;

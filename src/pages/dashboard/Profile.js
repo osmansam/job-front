@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
   createProfile,
+  getProfile,
   handleChange,
-  setProfile,
   setIsEditing,
 } from "../../features/profile/ProfileSlice.js";
 
@@ -43,8 +43,7 @@ const Profile = () => {
     dispatch(handleChange({ name, value }));
   };
   React.useEffect(() => {
-    dispatch(setProfile());
-    console.log(name, email);
+    dispatch(getProfile());
   }, [user]);
 
   const handleSubmit = (e) => {
@@ -170,7 +169,7 @@ const Profile = () => {
           value={skills}
           handleChange={handleProfileChange}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">{isEditing ? "Edit" : "Submit"}</button>
       </form>
     </Wrapper>
   );
