@@ -7,6 +7,7 @@ import {
   updateUserThunk,
   resetPasswordThunk,
   forgotPasswordThunk,
+  logoutUserThunk,
 } from "./userThunk";
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   isSidebarOpen: false,
   isLoading: false,
 };
+
 export const registerUser = createAsyncThunk(
   "user/register",
   async (user, thunkAPI) => {
@@ -45,6 +47,12 @@ export const forgotPassword = createAsyncThunk(
     return forgotPasswordThunk("auth/forgot-password", user, thunkAPI);
   }
 );
+export const logoutUser = createAsyncThunk(
+  "user/logout",
+  async (user, thunkAPI) => {
+    return logoutUserThunk("auth/logout", user, thunkAPI);
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -52,11 +60,6 @@ const userSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
-    },
-    logoutUser: async (state) => {
-      state.user = null;
-      await axios.delete("/api/v1/auth/logout");
-      toast.success(`Logged out successfully.`);
     },
   },
   extraReducers: (builder) => {
@@ -120,8 +123,21 @@ const userSlice = createSlice({
       .addCase(forgotPassword.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        toast.success(`Logged out successfully.`);
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
       });
   },
 });
-export const { toggleSidebar, logoutUser } = userSlice.actions;
+export const { toggleSidebar } = userSlice.actions;
 export default userSlice.reducer;

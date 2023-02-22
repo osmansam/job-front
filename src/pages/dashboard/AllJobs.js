@@ -14,9 +14,13 @@ const AllJobs = () => {
     (state) => state.search
   );
   const { user } = useSelector((state) => state.user);
+
   useEffect(() => {
-    dispatch(getAllJobs());
+    if (user) {
+      dispatch(getAllJobs());
+    }
   }, []);
+
   const handlePageChange = (page) => {
     dispatch(changePage(page));
     dispatch(getAllJobs());

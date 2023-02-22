@@ -32,7 +32,11 @@ const Navbar = () => {
                 <Link to="/addjob">Add Job</Link>
               </li>
             )}
-            <li onClick={() => dispatch(logoutUser())}>
+            <li
+              onClick={() => {
+                dispatch(logoutUser());
+              }}
+            >
               <Link to="/register">Logout</Link>
             </li>
           </ul>

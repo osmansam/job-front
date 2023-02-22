@@ -10,9 +10,13 @@ const SingleJob = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, job } = useSelector((state) => state.job);
+  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(getJob(id));
   }, []);
+  if (!user) {
+    return history.push("/register");
+  }
   if (isLoading) {
     return (
       <div>
