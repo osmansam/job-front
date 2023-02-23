@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { updateCandidate } from "../features/user/userSlice";
 
 const Candidate = ({ candidate }) => {
   const history = useHistory();
@@ -22,7 +23,16 @@ const Candidate = ({ candidate }) => {
     graduationYear,
     skills,
   } = candidate;
-
+  const handleAccepted = () => {
+    dispatch(
+      updateCandidate({ id: candidate._id, isAccepted: true, isPending: false })
+    );
+  };
+  const handleRejected = () => {
+    dispatch(
+      updateCandidate({ id: candidate._id, isRejected: true, isPending: false })
+    );
+  };
   return (
     <Wrapper>
       <div className="candidate">
