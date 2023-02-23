@@ -66,3 +66,12 @@ export const jobCandidatesThunk = async (url, job, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+
+export const updateCandidateThunk = async (url, candidate, thunkAPI) => {
+  try {
+    const resp = await axios.patch(`${baseURL}/${url}`, candidate);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
