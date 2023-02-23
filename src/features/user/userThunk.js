@@ -58,3 +58,11 @@ export const createCandidateThunk = async (url, candidate, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const jobCandidatesThunk = async (url, job, thunkAPI) => {
+  try {
+    const resp = await axios.post(`${baseURL}/${url}`, { job });
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

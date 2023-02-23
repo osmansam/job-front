@@ -20,3 +20,12 @@ export const getProfileThunk = async (url, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+
+export const accessProfileThunk = async (url, user, thunkAPI) => {
+  try {
+    const resp = await axios.post(`${baseURL}/${url}`, user);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

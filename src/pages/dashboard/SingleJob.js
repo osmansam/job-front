@@ -1,25 +1,23 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Job from "../../components/Job";
 import { getJob } from "../../features/job/jobSlice";
 import axios from "axios";
-import { createCandidate } from "../../features/user/userSlice";
+import { createCandidate, jobCandidates } from "../../features/user/userSlice";
 import styled from "styled-components";
+import CandidatesContainer from "../../components/CandidatesContainer";
 const SingleJob = () => {
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, job } = useSelector((state) => state.job);
-  const { user } = useSelector((state) => state.user);
+  const { user, candidates } = useSelector((state) => state.user);
   const [isCandidate, setIsCandidate] = useState(false);
   const checkCandidate = async (id, user) => {
     const res = await axios.post(
       `http://localhost:3000/api/v1/candidate/check`,
-      {
-        job: id,
-      }
+      { job: id }
     );
 
     if (res.data.isCandidate) {
@@ -28,6 +26,7 @@ const SingleJob = () => {
   };
   useEffect(() => {
     dispatch(getJob(id));
+    dispatch(jobCandidates(id));
     if (user) {
       checkCandidate(id, user);
     }
@@ -46,7 +45,7 @@ const SingleJob = () => {
   return (
     <div className="job-container">
       <Job job={job} />
-      {!isCandidate && (
+      {user.role !== "employer" && !isCandidate && (
         <button
           onClick={() => {
             dispatch(createCandidate({ job: id, user: user.userId }));
@@ -56,7 +55,10 @@ const SingleJob = () => {
           Apply
         </button>
       )}
-      {isCandidate && <h2>Applied</h2>}
+      {user.role !== "employer" && isCandidate && <h2>Applied</h2>}
+      {user.role === "employer" && (
+        <CandidatesContainer candidates={candidates} />
+      )}
     </div>
   );
 };

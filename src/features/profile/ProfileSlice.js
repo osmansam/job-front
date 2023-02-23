@@ -1,9 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { createProfileThunk, getProfileThunk } from "./ProfileThunk";
+import {
+  createProfileThunk,
+  getProfileThunk,
+  accessProfileThunk,
+} from "./ProfileThunk";
 
 const initialState = {
-  profile: null,
+  profile: [],
   name: "",
   lastName: "",
   email: "",
@@ -44,6 +48,13 @@ export const getProfile = createAsyncThunk(
     return getProfileThunk("profile", profile, thunkAPI);
   }
 );
+export const accessProfile = createAsyncThunk(
+  "profile/access",
+  async (profile, thunkAPI) => {
+    return accessProfileThunk("profile/access", profile, thunkAPI);
+  }
+);
+
 const profileSlice = createSlice({
   name: "profile",
   initialState,
@@ -56,6 +67,9 @@ const profileSlice = createSlice({
     },
     setIsEditing: (state, { payload }) => {
       state.isEditing = payload;
+    },
+    setProfile: (state) => {
+      state.profil = [];
     },
   },
   extraReducers: (builder) => {
@@ -76,22 +90,22 @@ const profileSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.profile = action.payload;
-        if (state.profile) {
-          state.name = state.profile.profile.name;
-          state.lastName = state.profile.profile.lastName;
-          state.email = state.profile.profile.email;
-          state.phone = state.profile.profile.phone;
-          state.address = state.profile.profile.address;
-          state.city = state.profile.profile.city;
-          state.country = state.profile.profile.country;
-          state.zipCode = state.profile.profile.zipCode;
-          state.degree = state.profile.profile.degree;
-          state.field = state.profile.profile.field;
-          state.university = state.profile.profile.university;
-          state.graduationYear = state.profile.profile.graduationYear;
-          state.skills = state.profile.profile.skills;
-          state.isEditing = state.profile.profile.isEditing;
+
+        if (action.payload) {
+          state.name = action.payload.profile.name;
+          state.lastName = action.payload.profile.lastName;
+          state.email = action.payload.profile.email;
+          state.phone = action.payload.profile.phone;
+          state.address = action.payload.profile.address;
+          state.city = action.payload.profile.city;
+          state.country = action.payload.profile.country;
+          state.zipCode = action.payload.profile.zipCode;
+          state.degree = action.payload.profile.degree;
+          state.field = action.payload.profile.field;
+          state.university = action.payload.profile.university;
+          state.graduationYear = action.payload.profile.graduationYear;
+          state.skills = action.payload.profile.skills;
+          state.isEditing = action.payload.profile.isEditing;
         } else {
           return initialState;
         }
@@ -99,10 +113,21 @@ const profileSlice = createSlice({
       .addCase(getProfile.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
+      })
+      .addCase(accessProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(accessProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.profile.push(action.payload);
+      })
+      .addCase(accessProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
       });
   },
 });
 
-export const { handleChange, clearProfile, setIsEditing } =
+export const { handleChange, clearProfile, setIsEditing, setProfile } =
   profileSlice.actions;
 export default profileSlice.reducer;

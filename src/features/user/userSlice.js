@@ -9,12 +9,14 @@ import {
   forgotPasswordThunk,
   logoutUserThunk,
   createCandidateThunk,
+  jobCandidatesThunk,
 } from "./userThunk";
 
 const initialState = {
   user: null,
   isSidebarOpen: false,
   isLoading: false,
+  candidates: {},
 };
 
 export const registerUser = createAsyncThunk(
@@ -58,6 +60,12 @@ export const createCandidate = createAsyncThunk(
   "user/createCandidate",
   async (candidate, thunkAPI) => {
     return createCandidateThunk("candidate", candidate, thunkAPI);
+  }
+);
+export const jobCandidates = createAsyncThunk(
+  "user/jobCandidates",
+  async (job, thunkAPI) => {
+    return jobCandidatesThunk("candidate/job", job, thunkAPI);
   }
 );
 
@@ -152,6 +160,17 @@ const userSlice = createSlice({
         toast.success(`Candidate created successfully.`);
       })
       .addCase(createCandidate.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(jobCandidates.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(jobCandidates.fulfilled, (state, action) => {
+        state.candidates = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(jobCandidates.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });
