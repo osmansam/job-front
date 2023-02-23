@@ -6,6 +6,7 @@ import { getJob } from "../../features/job/jobSlice";
 import axios from "axios";
 import { createCandidate, jobCandidates } from "../../features/user/userSlice";
 import styled from "styled-components";
+import CandidatesContainer from "../../components/CandidatesContainer";
 const SingleJob = () => {
   const { id } = useParams();
   const history = useHistory();
@@ -26,12 +27,6 @@ const SingleJob = () => {
   useEffect(() => {
     dispatch(getJob(id));
     dispatch(jobCandidates(id));
-    setTimeout(() => {
-      console.log("====================================");
-      console.log(candidates[0].user);
-      console.log("====================================");
-    }, 2000);
-
     if (user) {
       checkCandidate(id, user);
     }
@@ -61,6 +56,9 @@ const SingleJob = () => {
         </button>
       )}
       {user.role !== "employer" && isCandidate && <h2>Applied</h2>}
+      {user.role === "employer" && (
+        <CandidatesContainer candidates={candidates} />
+      )}
     </div>
   );
 };
