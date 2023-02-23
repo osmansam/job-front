@@ -48,9 +48,10 @@ const SingleJob = () => {
       <Job job={job} />
       {!isCandidate && (
         <button
-          onClick={() =>
-            dispatch(createCandidate({ job: id, user: user.userId }))
-          }
+          onClick={() => {
+            dispatch(createCandidate({ job: id, user: user.userId }));
+            setIsCandidate(true);
+          }}
         >
           Apply
         </button>

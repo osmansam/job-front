@@ -50,3 +50,11 @@ export const logoutUserThunk = async (url, user, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.response.data.msg);
   }
 };
+export const createCandidateThunk = async (url, candidate, thunkAPI) => {
+  try {
+    const resp = await axios.post(`${baseURL}/${url}`, candidate);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
