@@ -43,23 +43,35 @@ const SingleJob = () => {
     );
   }
   return (
-    <div className="job-container">
-      <Job job={job} />
-      {user.role !== "employer" && !isCandidate && (
-        <button
-          onClick={() => {
-            dispatch(createCandidate({ job: id, user: user.userId }));
-            setIsCandidate(true);
-          }}
-        >
-          Apply
-        </button>
-      )}
+    <Wrapper>
+      <div className="job-container">
+        <Job job={job} />
+        {user.role !== "employer" && !isCandidate && (
+          <button
+            onClick={() => {
+              dispatch(createCandidate({ job: id, user: user.userId }));
+              setIsCandidate(true);
+            }}
+          >
+            Apply
+          </button>
+        )}
+      </div>
+
       {user.role !== "employer" && isCandidate && <h2>Applied</h2>}
       {user.role === "employer" && (
         <CandidatesContainer candidates={candidates} />
       )}
-    </div>
+    </Wrapper>
   );
 };
+const Wrapper = styled.div`
+  .job-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: left;
+    margin: 2rem auto;
+  }
+`;
 export default SingleJob;
