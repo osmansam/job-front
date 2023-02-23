@@ -168,7 +168,6 @@ const userSlice = createSlice({
       })
       .addCase(jobCandidates.fulfilled, (state, action) => {
         state.candidates = action.payload;
-        console.log(action.payload, "action.payload");
         state.isLoading = false;
       })
       .addCase(jobCandidates.rejected, (state, action) => {
