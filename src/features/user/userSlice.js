@@ -8,6 +8,7 @@ import {
   resetPasswordThunk,
   forgotPasswordThunk,
   logoutUserThunk,
+  createCandidateThunk,
 } from "./userThunk";
 
 const initialState = {
@@ -51,6 +52,12 @@ export const logoutUser = createAsyncThunk(
   "user/logout",
   async (user, thunkAPI) => {
     return logoutUserThunk("auth/logout", user, thunkAPI);
+  }
+);
+export const createCandidate = createAsyncThunk(
+  "user/createCandidate",
+  async (candidate, thunkAPI) => {
+    return createCandidateThunk("candidate", candidate, thunkAPI);
   }
 );
 
@@ -134,6 +141,17 @@ const userSlice = createSlice({
         toast.success(`Logged out successfully.`);
       })
       .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(createCandidate.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createCandidate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success(`Candidate created successfully.`);
+      })
+      .addCase(createCandidate.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });
