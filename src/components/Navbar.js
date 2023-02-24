@@ -34,6 +34,11 @@ const Navbar = () => {
             )}
             {user.role !== "employer" && (
               <li>
+                <Link to="/appliedJobs">Applied Jobs</Link>
+              </li>
+            )}
+            {user.role !== "employer" && (
+              <li>
                 <Link to="/profile">Profile</Link>
               </li>
             )}
