@@ -14,6 +14,7 @@ const initialState = {
   jobs: [],
   totalJobs: 0,
   numberOfPages: 0,
+  appliedJobspage: 1,
 };
 export const getAllJobs = createAsyncThunk("job/getAll", getAllJobsThunk);
 
@@ -29,6 +30,9 @@ const searchSlice = createSlice({
     },
     changePage: (state, { payload }) => {
       state.page = payload;
+    },
+    changeAppliedJobPage: (state, { payload }) => {
+      state.appliedJobspage = payload;
     },
   },
   extraReducers: (builder) => {
@@ -50,4 +54,5 @@ const searchSlice = createSlice({
 });
 
 export default searchSlice.reducer;
-export const { clearFilters, handleFilters, changePage } = searchSlice.actions;
+export const { clearFilters, handleFilters, changePage, changeAppliedJobPage } =
+  searchSlice.actions;
