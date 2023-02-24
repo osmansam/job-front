@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import { changePage } from "../../features/search/searchSlice";
 const AllJobs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoading, jobs, numberOfPages } = useSelector(
+  const { isLoading, jobs, numberOfPages, page } = useSelector(
     (state) => state.search
   );
   const { user } = useSelector((state) => state.user);
@@ -21,8 +21,8 @@ const AllJobs = () => {
     }
   }, []);
 
-  const handlePageChange = (page) => {
-    dispatch(changePage(page));
+  const handlePageChange = (pageNumber) => {
+    dispatch(changePage(pageNumber));
     dispatch(getAllJobs());
   };
 
@@ -46,15 +46,16 @@ const AllJobs = () => {
           <div className="page-container">
             {numberOfPages > 1 &&
               Array.from({ length: numberOfPages }, (_, i) => {
-                const page = i + 1;
+                const pageNumber = i + 1;
                 return (
                   <button
-                    key={page}
+                    key={pageNumber}
+                    className={`${page === pageNumber ? "active" : null}`}
                     onClick={() => {
-                      handlePageChange(page);
+                      handlePageChange(pageNumber);
                     }}
                   >
-                    {page}
+                    {pageNumber}
                   </button>
                 );
               })}
@@ -96,6 +97,10 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin: 1.5rem;
+  }
+  .active {
+    background-color: black;
+    color: #fff;
   }
 `;
 

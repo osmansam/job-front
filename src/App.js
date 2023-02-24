@@ -5,6 +5,7 @@ import AddJob from "./pages/dashboard/AddJob";
 import SingleJob from "./pages/dashboard/SingleJob";
 import AllJobs from "./pages/dashboard/AllJobs";
 import Profile from "./pages/dashboard/Profile";
+import AppliedJobs from "./pages/dashboard/AppliedJobs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route path="/allJobs" exact>
           <AllJobs />
+        </Route>
+        <Route path="/appliedJobs" exact>
+          <AppliedJobs />
         </Route>
         <Route path="/addjob" exact>
           <AddJob />

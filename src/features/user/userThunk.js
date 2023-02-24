@@ -75,3 +75,11 @@ export const updateCandidateThunk = async (url, candidate, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const getAllCandidatesThunk = async (url, candidate, thunkAPI) => {
+  try {
+    const resp = await axios.get(`${baseURL}/${url}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
