@@ -6,10 +6,11 @@ import { getAllCandidates } from "../../features/user/userSlice";
 import { changeAppliedJobPage } from "../../features/search/searchSlice";
 const AppliedJobs = () => {
   const { user, candidates } = useSelector((state) => state.user);
+  const { appliedJobspage } = useSelector((state) => state.search);
   const { jobs } = useSelector((state) => state.search);
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [jobsToShow, setJobsToShow] = useState([]);
   const dispatch = useDispatch();
-  const { appliedJobspage } = useSelector((state) => state.search);
   const handlePageChange = (pageNumber) => {
     dispatch(changeAppliedJobPage(pageNumber));
   };
@@ -21,6 +22,9 @@ const AppliedJobs = () => {
       });
       const jobs = appliedJobs?.map((obj) => obj.job);
       setNumberOfPages(Math.ceil(jobs.length / 4));
+      const startIndex = (appliedJobspage - 1) * 4;
+      const endIndex = startIndex + 4;
+      setJobsToShow(jobs.slice(startIndex, endIndex));
     }
   }, [user, appliedJobspage]);
 
@@ -28,7 +32,7 @@ const AppliedJobs = () => {
     <Wrapper>
       <h1 className="title">Applied Jobs</h1>
       <div className="jobs-container">
-        <JobContainer jobs={jobs} />
+        <JobContainer jobs={jobsToShow} />
       </div>
       <div className="page-container">
         {numberOfPages > 1 &&
