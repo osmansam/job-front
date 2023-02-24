@@ -57,8 +57,7 @@ const SingleJob = () => {
           </button>
         )}
       </div>
-
-      {user.role !== "employer" && isCandidate && <h2>Applied</h2>}
+      {user.role !== "employer" && isCandidate && <button>Withdraw</button>}
       {user.role === "employer" && (
         <CandidatesContainer candidates={candidates} />
       )}
@@ -66,12 +65,31 @@ const SingleJob = () => {
   );
 };
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   .job-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: left;
     margin: 2rem auto;
+  }
+  button {
+    justify-content: center;
+    align-items: center;
+
+    background-color: #f5f5f5;
+    align-self: center;
+    border: none;
+    height: 3rem;
+    width: 6rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    &:hover {
+      background-color: #e0e0e0;
+    }
   }
 `;
 export default SingleJob;
