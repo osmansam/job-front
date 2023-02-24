@@ -32,7 +32,7 @@ const searchSlice = createSlice({
       state.page = payload;
     },
     changeAppliedJobPage: (state, { payload }) => {
-      state.appliedJobPage = payload;
+      state.appliedJobspage = payload;
     },
   },
   extraReducers: (builder) => {

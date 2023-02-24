@@ -15,12 +15,14 @@ const AppliedJobs = () => {
   };
   useEffect(() => {
     dispatch(getAllCandidates());
-    const appliedJobs = candidates?.filter((candidate) => {
-      return candidate.user === user.userId;
-    });
-    const jobs = appliedJobs?.map((obj) => obj.job);
-    setNumberOfPages(Math.ceil(jobs.length / 4));
-  }, [user]);
+    if (candidates) {
+      const appliedJobs = candidates?.filter((candidate) => {
+        return candidate.user === user.userId;
+      });
+      const jobs = appliedJobs?.map((obj) => obj.job);
+      setNumberOfPages(Math.ceil(jobs.length / 4));
+    }
+  }, [user, appliedJobspage]);
 
   return (
     <Wrapper>
