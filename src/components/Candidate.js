@@ -24,6 +24,15 @@ const Candidate = ({ candidate }) => {
     graduationYear,
     skills,
   } = candidate;
+  console.log(candidate);
+
+  useEffect(() => {
+    if (candidate.isAccepted) {
+      setStatus("accepted");
+    } else if (candidate.isRejected) {
+      setStatus("rejected");
+    }
+  }, [candidate]);
   const handleAccepted = () => {
     dispatch(
       updateCandidate({
