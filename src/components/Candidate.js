@@ -2,11 +2,13 @@ import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { updateCandidate } from "../features/user/userSlice";
 
 const Candidate = ({ candidate }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [readMore, setReadMore] = useState(false);
+  const [status, setStatus] = useState("pending");
   const {
     name,
     lastName,
@@ -22,7 +24,35 @@ const Candidate = ({ candidate }) => {
     graduationYear,
     skills,
   } = candidate;
+  console.log(candidate);
 
+  useEffect(() => {
+    if (candidate.isAccepted) {
+      setStatus("accepted");
+    } else if (candidate.isRejected) {
+      setStatus("rejected");
+    }
+  }, [candidate]);
+  const handleAccepted = () => {
+    dispatch(
+      updateCandidate({
+        candidateId: candidate._id,
+        isAccepted: true,
+        isPending: false,
+      })
+    );
+    setStatus("accepted");
+  };
+  const handleRejected = () => {
+    dispatch(
+      updateCandidate({
+        candidateId: candidate._id,
+        isRejected: true,
+        isPending: false,
+      })
+    );
+    setStatus("rejected");
+  };
   return (
     <Wrapper>
       <div className="candidate">
@@ -76,6 +106,18 @@ const Candidate = ({ candidate }) => {
               <span className="bold">Skills : </span>
               {skills}
             </p>
+            {status === "pending" && (
+              <div className="buttons">
+                <button onClick={handleAccepted} className="btn-accept">
+                  Accept
+                </button>
+                <button onClick={handleRejected} className="btn-reject">
+                  Reject
+                </button>
+              </div>
+            )}
+            {status === "accepted" && <h2 className="accepted">Accepted</h2>}
+            {status === "rejected" && <h2 className="rejected">Rejected</h2>}
           </>
         )}
         <button
@@ -121,6 +163,28 @@ const Wrapper = styled.div`
   }
   .bold {
     font-weight: bold;
+  }
+  .buttons {
+    grid-column: 3/3;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 1rem;
+    width: 80%;
+  }
+  .btn-accept {
+    background-color: green;
+  }
+  .btn-reject {
+    background-color: red;
+  }
+  .accepted {
+    grid-column: 3/3;
+    color: green;
+  }
+  .rejected {
+    grid-column: 3/3;
+    color: red;
   }
 `;
 export default Candidate;
