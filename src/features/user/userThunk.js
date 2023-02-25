@@ -83,3 +83,13 @@ export const getAllCandidatesThunk = async (url, candidate, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const deleteCandidateThunk = async (url, candidate, thunkAPI) => {
+  try {
+    const resp = await axios.delete(`${baseURL}/${url}`, {
+      data: { jobId: candidate.jobId, userId: candidate.userId },
+    });
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

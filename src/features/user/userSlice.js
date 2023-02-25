@@ -12,6 +12,7 @@ import {
   jobCandidatesThunk,
   updateCandidateThunk,
   getAllCandidatesThunk,
+  deleteCandidateThunk,
 } from "./userThunk";
 
 const initialState = {
@@ -80,6 +81,12 @@ export const getAllCandidates = createAsyncThunk(
   "user/getAllCandidates",
   async (candidate, thunkAPI) => {
     return getAllCandidatesThunk("candidate/", candidate, thunkAPI);
+  }
+);
+export const deleteCandidate = createAsyncThunk(
+  "user/deleteCandidate",
+  async (candidate, thunkAPI) => {
+    return deleteCandidateThunk("candidate/delete", candidate, thunkAPI);
   }
 );
 const userSlice = createSlice({
@@ -206,6 +213,17 @@ const userSlice = createSlice({
         state.candidates = action.payload;
       })
       .addCase(getAllCandidates.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(deleteCandidate.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteCandidate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success(`Candidate deleted successfully.`);
+      })
+      .addCase(deleteCandidate.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });

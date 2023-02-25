@@ -4,7 +4,11 @@ import { useHistory, useParams } from "react-router-dom";
 import Job from "../../components/Job";
 import { getJob } from "../../features/job/jobSlice";
 import axios from "axios";
-import { createCandidate, jobCandidates } from "../../features/user/userSlice";
+import {
+  createCandidate,
+  jobCandidates,
+  deleteCandidate,
+} from "../../features/user/userSlice";
 import styled from "styled-components";
 import CandidatesContainer from "../../components/CandidatesContainer";
 const SingleJob = () => {
@@ -57,7 +61,16 @@ const SingleJob = () => {
           </button>
         )}
       </div>
-      {user.role !== "employer" && isCandidate && <button>Withdraw</button>}
+      {user.role !== "employer" && isCandidate && (
+        <button
+          onClick={() => {
+            dispatch(deleteCandidate({ jobId: id, userId: user.userId }));
+            setIsCandidate(false);
+          }}
+        >
+          Withdraw
+        </button>
+      )}
       {user.role === "employer" && (
         <CandidatesContainer candidates={candidates} />
       )}
