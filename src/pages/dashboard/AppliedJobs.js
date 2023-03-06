@@ -16,7 +16,11 @@ const AppliedJobs = () => {
   };
   useEffect(() => {
     dispatch(getAllCandidates());
+    // dispatch(handlePageChange(1));
+  }, [dispatch]);
+  useEffect(() => {
     if (candidates) {
+      console.log(candidates);
       const appliedJobs = candidates?.filter((candidate) => {
         return candidate.user === user.userId;
       });
@@ -26,7 +30,7 @@ const AppliedJobs = () => {
       const endIndex = startIndex + 4;
       setJobsToShow(jobs.slice(startIndex, endIndex));
     }
-  }, [user, appliedJobspage]);
+  }, [dispatch, candidates, appliedJobspage]);
 
   return (
     <Wrapper>
