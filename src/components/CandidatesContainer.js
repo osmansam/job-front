@@ -4,16 +4,20 @@ import Candidate from "./Candidate";
 import { useSelector } from "react-redux";
 
 const CandidatesContainer = ({ candidates }) => {
-  return (
-    <Wrapper>
-      <h1 className="title">Candidates</h1>
-      {candidates &&
-        candidates.map((candidate) => {
-          return <Candidate key={candidate._id} candidate={candidate} />;
-        })}
-    </Wrapper>
-  );
+  if (candidates !== undefined && candidates !== null && candidates !== []) {
+    console.log(candidates);
+    return (
+      <Wrapper>
+        <h1 className="title">Candidates</h1>
+        {candidates &&
+          candidates?.map((candidate) => {
+            return <Candidate key={candidate._id} candidate={candidate} />;
+          })}
+      </Wrapper>
+    );
+  }
 };
+
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;

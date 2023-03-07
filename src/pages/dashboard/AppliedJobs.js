@@ -16,8 +16,10 @@ const AppliedJobs = () => {
   };
   useEffect(() => {
     dispatch(getAllCandidates());
-    // dispatch(handlePageChange(1));
   }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(changeAppliedJobPage(1));
+  // }, [user]);
   useEffect(() => {
     if (candidates) {
       console.log(candidates);
